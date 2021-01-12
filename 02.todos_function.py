@@ -2,7 +2,7 @@ import os.path
 # 모듈화
 
 todo_list = []
-todoNum = 0
+
 
 # 목록
 
@@ -85,8 +85,19 @@ def load_data():
             if len(data.split("|")) == 2:
                 todo = data.split("|")[1].strip("\n").split(",")
                 todo_list.append({"todoNum": int(todo[0]), "title": todo[1]})
+                todoNum = int(todo[0])
             if not data:
                 break
+
+
+# todoNum 초기화
+def todonum():
+    if len(todo_list) == 0:
+        todoNum = 0
+        return todoNum
+    elif len(todo_list) > 0:
+        todoNum = todo_list[len(todo_list)-1]["todoNum"] + 1
+        return todoNum
 
 
 # ------------------------------------------------
@@ -104,9 +115,8 @@ while True:
     if n == 1:
         print("=======일정 등록=======")
         title = input("일정을 등록하세요 : ")
-        todo = {"todoNum": todoNum, "title": title}
+        todo = {"todoNum": todonum(), "title": title}
 
-        todoNum += 1
         print(register(todo))
 
     elif n == 2:
